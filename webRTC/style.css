@@ -11,21 +11,10 @@
 .p-1 {
   padding: 10px;
 }
-.chat-box {
-  height: 200px;
-  text-align: left;
-  border: 2px solid red;
-  padding: 5px;
-  overflow: auto;
-  font-size: 20px;
-}
 
-.input-box {
-  height: 30px;
-  width: 100%;
-  padding-left: 10px;
-  padding-right: 10px;
-  font-size: 20px;
+video{
+  width: 300px;
+  height: 200px;
 }
 
 .log {

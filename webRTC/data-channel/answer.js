@@ -36,7 +36,7 @@ async function init() {
 
     let socket = await getSocket();
     await navigator.mediaDevices
-      .getUserMedia({ audio: true, video: true })
+      .getDisplayMedia({video:true})
       .then((stream) => {
         log("Added local Video");
         document.getElementById("input").srcObject = stream;
