@@ -26,7 +26,6 @@ io.on("connection", (socket) => {
   socket.join("data_channel");
 
   socket.on("offer", (sdp) => {
-    console.log(sdp)
     socket.to("data_channel").emit("offer", sdp);
   });
 
