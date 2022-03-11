@@ -32,8 +32,6 @@ async function init() {
         },
       ],
     });
-
-    let dc = pc.createDataChannel("msg");
     let socket = await getSocket();
 
     pc.onicecandidate = function (e) {
@@ -41,29 +39,24 @@ async function init() {
       log("onicecandidate");
     };
 
+    pc.ontrack = function (track) {
+      document.getElementById("output").srcObject = track.streams[0];
+      log("Added remote Track")
+    };
     socket.on("candidate", async function (candidate) {
       await pc.addIceCandidate(JSON.parse(candidate));
     });
 
-    dc.onopen = function (e) {
-      log("Channel Opened");
-    };
+    await navigator.mediaDevices
+      .getUserMedia({ audio: true, video: true })
+      .then((stream) => {
+        log("Added local Video");
+        document.getElementById("input").srcObject = stream;
+        stream.getTracks().forEach((track) => {
+          pc.addTrack(track, stream);
+        });
+      });
 
-    dc.onclose = function (e) {
-      console.log("Channel closed");
-      log("Channel closed");
-    };
-
-    dc.onmessage = function (msg) {
-      // add sent text to the output chat box
-      let opt = document.getElementById("output");
-      opt.innerText = opt.innerText + "\n" + msg.data;
-
-      // scroll to the bottom pre
-      opt.scrollTop = 100000000;
-
-      log("Received :=> " + msg.data);
-    };
     let offer = await pc.createOffer();
     await pc.setLocalDescription(offer);
     log("Offer Created");
@@ -74,28 +67,6 @@ async function init() {
       log("Received :=> answer");
       pc.setRemoteDescription(JSON.parse(sdp));
     });
-    // add event listener to input box
-    // send message when user presses ENTER
-    document
-      .querySelector(".input-box")
-      .addEventListener("keypress", function (e) {
-        if (e.keyCode === 13) {
-          log("Sent :=> " + e.target.value);
-
-          // add sent text to the input chat box
-          let inp = document.getElementById("input");
-          inp.innerText = inp.innerText + "\n" + e.target.value;
-
-          // send message
-          dc.send(e.target.value);
-
-          // clear input box
-          e.target.value = "";
-
-          // scroll to the bottom pre
-          inp.scrollTop = 100000000;
-        }
-      });
   } catch (e) {
     console.log(e);
     log("Some error occured\nPlease check the console");
