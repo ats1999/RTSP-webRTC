@@ -37,22 +37,33 @@ async function init() {
     let socket = await getSocket();
 
     pc.onicecandidate = function (e) {
-      if (e.candidate)
-        try {
-          //   pc.addIceCandidate(e.candidate);
-        } catch (e) {}
+      if (e.candidate) socket.emit("candidate", JSON.stringify(e.candidate));
       log("onicecandidate");
     };
 
+    socket.on("candidate", async function (candidate) {
+      await pc.addIceCandidate(JSON.parse(candidate));
+    });
+
     dc.onopen = function (e) {
-      console.log("Channel Opened", e);
       log("Channel Opened");
     };
+
     dc.onclose = function (e) {
       console.log("Channel closed");
       log("Channel closed");
     };
 
+    dc.onmessage = function (msg) {
+      // add sent text to the output chat box
+      let opt = document.getElementById("output");
+      opt.innerText = opt.innerText + "\n" + msg.data;
+
+      // scroll to the bottom pre
+      opt.scrollTop = 100000000;
+
+      log("Received :=> " + msg.data);
+    };
     let offer = await pc.createOffer();
     await pc.setLocalDescription(offer);
     log("Offer Created");
@@ -74,6 +85,9 @@ async function init() {
           // add sent text to the input chat box
           let inp = document.getElementById("input");
           inp.innerText = inp.innerText + "\n" + e.target.value;
+
+          // send message
+          dc.send(e.target.value);
 
           // clear input box
           e.target.value = "";

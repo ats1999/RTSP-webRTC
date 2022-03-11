@@ -22,6 +22,7 @@ function getSocket() {
     });
   });
 }
+
 async function init() {
   log("Init Called");
   try {
@@ -33,19 +34,35 @@ async function init() {
       ],
     });
 
+    let dc = null;
     let socket = await getSocket();
 
     pc.onicecandidate = function (e) {
-      if (e.candidate) {
-        try {
-        //   pc.addIceCandidate(e.candidate);
-        } catch (e) {}
-      }
+      if (e.candidate) socket.emit("candidate", JSON.stringify(e.candidate));
       log("onicecandidate");
     };
 
+    socket.on("candidate", async function (candidate) {
+      await pc.addIceCandidate(JSON.parse(candidate));
+    });
+
     pc.ondatachannel = function (e) {
-      console.log(e);
+      dc = e.channel;
+
+      dc.onopen = function () {
+        log("Channel Opened");
+      };
+
+      dc.onmessage = function (msg) {
+        // add sent text to the output chat box
+        let opt = document.getElementById("output");
+        opt.innerText = opt.innerText + "\n" + msg.data;
+
+        // scroll to the bottom pre
+        opt.scrollTop = 100000000;
+
+        log("Received :=> " + msg.data);
+      };
     };
 
     socket.on("offer", async function (sdp) {
@@ -56,6 +73,7 @@ async function init() {
       log("Sent :=> answer");
       socket.emit("answer", JSON.stringify(ans));
     });
+
     // add event listener to input box
     // send message when user presses ENTER
     document
@@ -67,6 +85,9 @@ async function init() {
           // add sent text to the input chat box
           let inp = document.getElementById("input");
           inp.innerText = inp.innerText + "\n" + e.target.value;
+
+          // send message
+          dc.send(e.target.value);
 
           // clear input box
           e.target.value = "";

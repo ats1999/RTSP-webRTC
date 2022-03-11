@@ -17,14 +17,15 @@
   border: 2px solid red;
   padding: 5px;
   overflow: auto;
+  font-size: 20px;
 }
 
 .input-box {
   height: 30px;
-  font-size: 20px;
   width: 100%;
   padding-left: 10px;
   padding-right: 10px;
+  font-size: 20px;
 }
 
 .log {

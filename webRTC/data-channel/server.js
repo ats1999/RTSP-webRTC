@@ -32,6 +32,10 @@ io.on("connection", (socket) => {
   socket.on("answer", (sdp) => {
     socket.to("data_channel").emit("answer", sdp);
   });
+
+  socket.on("candidate", (candidate) => {
+    socket.to("data_channel").emit("candidate", candidate);
+  });
 });
 
 io.on("error", (e) => console.log(e));
