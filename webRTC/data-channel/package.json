@@ -1,0 +1,25 @@
+{
+  "name": "data-channel",
+  "version": "1.0.0",
+  "description": "Demo WebRTC Datachannel",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "keywords": [
+    "WebRTC"
+  ],
+  "author": "Rahul (github.com/ats1999)",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "socket.io": "^4.4.1"
+  }
+}

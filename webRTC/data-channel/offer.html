@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebRTC Offer - Chrome</title>
+    <link rel="stylesheet" href="../style.css" />
+    <script src="./offer.js"></script>
+  </head>
+  <body>
+    <h1 class="text-center">WebRTC Offer - Chrome</h1>
+    <div class="d-flex">
+      <div class="w-50 p-1 text-center">
+        <h5>Sent Text</h5>
+        <pre class="chat-box" id="input"></pre>
+      </div>
+      <div class="w-50 p-1 text-center">
+        <h5>Received Text</h5>
+        <pre class="chat-box" id="output"></pre>
+      </div>
+    </div>
+    <div class="input-container p-1 w-50">
+      <input type="text" class="input-box" placeholder="Type and ENTER" />
+    </div>
+    <h1 class="text-center">Log Data</h1>
+    <pre class="log"></pre>
+
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"></script>
+  </body>
+</html>

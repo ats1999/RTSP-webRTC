@@ -1,0 +1,35 @@
+.text-center {
+  text-align: center;
+}
+.d-flex {
+  display: flex;
+}
+.w-50 {
+  width: 50%;
+}
+
+.p-1 {
+  padding: 10px;
+}
+.chat-box {
+  height: 200px;
+  text-align: left;
+  border: 2px solid red;
+  padding: 5px;
+  overflow: auto;
+}
+
+.input-box {
+  height: 30px;
+  font-size: 20px;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.log {
+  height: 200px;
+  border: 2px solid red;
+  padding: 5px;
+  overflow: auto;
+}
