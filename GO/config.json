@@ -4,9 +4,14 @@
     "ice_servers": ["stun:stun.l.google.com:19302"]
   },
   "streams": {
-    "RTSP": {
+    "RTSP_0": {
       "on_demand": false,
-      "disable_audio": true,
+      "disable_audio": false,
+      "url": "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4"
+    },
+    "RTSP_1": {
+      "on_demand": false,
+      "disable_audio": false,
       "url": "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4"
     }
   }
